@@ -1,0 +1,6 @@
+name = Islandora Owner Access
+description = Allows users access to manage owned objects.
+package = Islandora
+version = 7.x-dev
+core = 7.x
+dependencies[] = islandora

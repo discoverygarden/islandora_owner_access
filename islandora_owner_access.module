@@ -1,0 +1,42 @@
+<?php
+
+/**
+ * @file
+ * Hook implementation(s) for islandora_access.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function islandora_owner_access_menu() {
+  $item = array();
+  $items['admin/islandora/islandora_access'] = array(
+    'title' => 'Islandora Access Admin',
+    'description' => 'Determine access to object manage permissions.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('islandora_access_user_admin'),
+    'access arguments' => array('administer permissions'),
+    'file' => 'includes/islandora_access.admin.inc',
+  );
+  return $items;
+
+}
+/**
+ * Implements hook_islandora_object_access().
+ *
+ * Allow management to objects submitters own.
+ */
+function islandora_owner_access_islandora_object_access($op, $object, $user) {
+  $management_operations = array(
+    ISLANDORA_VIEW_OBJECTS,
+  );
+
+  $role_name = variable_get('islandora_access_role', '');
+  $has_access = $user->name == $object->owner && in_array($role_name, $user->roles);
+
+  $has_admin_access = in_array("administrator", $user->roles);
+
+  $has_view_access = in_array($op, $management_operations);
+  return $has_access || $has_admin_access || $has_view_access;
+
+}

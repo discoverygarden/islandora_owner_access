@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Hook implementation(s) for islandora_access.
+ */
+
+/**
+ * Implements hook_uninstall().
+ */
+function islandora_owner_access_disable() {
+
+  // When the administrator disables the module then delete the role.
+  $role_name = variable_get('islandora_access_role', '');
+  $role = user_role_load_by_name($role_name);
+
+  if ($role) {
+    user_role_delete($role_name);
+  }
+}
