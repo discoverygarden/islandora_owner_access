@@ -38,7 +38,7 @@ function islandora_owner_access_islandora_object_access($op, $object, $user) {
   $has_admin_access = in_array("administrator", $user->roles);
 
   $has_management_access = in_array($op, $management_operations);
-  
+
   return $has_owner_access || $has_admin_access || $has_management_access;
 
 }
