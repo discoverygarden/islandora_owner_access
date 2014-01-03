@@ -17,17 +17,17 @@ function islandora_owner_access_user_admin($form, &$form_state) {
     '#tree' => TRUE,
   );
 
-  $form['islandora_access'] = array(
+  $form['islandora_owner_access'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Islandora Access Settings'),
+    '#title' => t('Islandora Owner Access Settings'),
     '#collapsible' => TRUE,
     '#collapsed' => FALSE,
   );
-  $form['islandora_access']['islandora_access_role'] = array(
+  $form['islandora_owner_access']['islandora_owner_access_role'] = array(
     '#type' => 'textfield',
-    '#title' => t('Islandora Access Role'),
-    '#default_value' => variable_get('islandora_access_role', ''),
-    '#description' => t('Enter the Islandora Access Role'),
+    '#title' => t('Islandora Owner Access Role'),
+    '#default_value' => variable_get('islandora_owner_access_role', ''),
+    '#description' => t('Enter the Islandora Owner Access Role'),
     '#required' => TRUE,
   );
 
@@ -43,11 +43,11 @@ function islandora_owner_access_user_admin($form, &$form_state) {
  * Form validation function.
  */
 function islandora_owner_access_user_admin_validate($form, &$form_state) {
-  $role_name = $form_state['values']['islandora_access']['islandora_access_role'];
+  $role_name = $form_state['values']['islandora_owner_access']['islandora_owner_access_role'];
 
   if (user_role_load_by_name($role_name)) {
-    form_set_error('islandora_access', t('"%role" role already exists. Enter a different role.', array(
-      '%role' => $form_state['values']['islandora_access']['islandora_access_role'],
+    form_set_error('islandora_owner_access', t('"%role" role already exists. Enter a different role.', array(
+      '%role' => $form_state['values']['islandora_owner_access']['islandora_owner_access_role'],
     )));
   }
 
@@ -57,8 +57,8 @@ function islandora_owner_access_user_admin_validate($form, &$form_state) {
  * Submit handler form islandora_access_user_admin form.
  */
 function islandora_owner_access_user_admin_submit($form, &$form_state) {
-  $role_name = $form_state['values']['islandora_access']['islandora_access_role'];
-  variable_set('islandora_access_role', $role_name);
+  $role_name = $form_state['values']['islandora_owner_access']['islandora_owner_access_role'];
+  variable_set('islandora_owner_access_role', $role_name);
   $role = new stdClass();
   $role->name = $role_name;
   user_role_save($role);
