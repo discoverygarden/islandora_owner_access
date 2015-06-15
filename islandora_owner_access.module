@@ -33,7 +33,13 @@ function islandora_owner_access_islandora_object_access($op, $object, $user) {
   );
 
   $role_name = variable_get('islandora_owner_access_role', '');
-  $has_owner_access = $user->name == $object->owner && in_array($role_name, $user->roles);
+  if ($user->uid == 0) {
+    $name = variable_get('anonymous', 'anonymous');
+  }
+  else {
+    $name = $user->name;
+  }
+  $has_owner_access = $name == $object->owner && in_array($role_name, $user->roles);
 
   $has_admin_access = in_array("administrator", $user->roles);
 
